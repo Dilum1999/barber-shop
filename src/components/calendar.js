@@ -2,31 +2,59 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import './calendar.css';
 
-const Calendar = () => {
-	let today = new Date();
-	let currentYear = today.getFullYear();
-	let currentMonth = today.getMonth();
+class Calendar extends React.Component {
+	constructor(props){
+		super(props)
+		let today = new Date()
+		
+		this.state = {
+			currentYear: today.getFullYear(),
+			currentMonth: today.getMonth()		
+		};
+		this.previous = this.previous.bind(this);
+		this.next = this.next.bind(this);
+		this.generateRows = this.generateRows.bind(this);
+	}
 	// let day = today.getDay();
-
-	const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-	];
-
 	
-	const next = () => {
-		currentYear = (currentYear === 11) ? currentYear + 1 : currentYear;
-		currentMonth = (currentMonth + 1) % 12;
-		generateRows(currentMonth,currentYear)
+	monthName(month) {
+		const monthNames = ["January", "February", "March", "April", "May", "June",
+		"July", "August", "September", "October", "November", "December"];
+		return monthNames[month]
+	}
+	
+	next() {
+		if(this.state.currentYear === 11){
+			this.setState({
+				currentYear: this.state.currentYear + 1
+			})
+		}
+		this.setState({
+			currentMonth:(this.state.currentMonth + 1) % 12
+		});
+		//generateRows(currentMonth,currentYear)
 	};
 
-	const previous = () => {
-		currentYear = (currentYear === 0) ? currentYear - 1 : currentYear;
-		currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-		generateRows(currentMonth,currentYear)
-	}
+	previous(){
+		if(this.state.currentYear === 0){
+			this.setState({
+				currentYear: this.state.currentYear - 1
+			})
+		}
+		if(this.state.currentMonth === 0){
+			this.setState({
+				currentMonth: 11
+			})
+		}else{
+			this.setState({
+				currentMonth: this.state.currentMonth - 1
+			})
+		}
+		//generateRows(currentMonth,currentYear)
+	};
 
 
-	const generateRows = (month, year) => {
+	 generateRows(month, year){
 		let firstDay = new Date(year, month, 1).getDay();
 		let numberOfDays = new Date(year, month + 1, 0).getDate();
 
@@ -63,32 +91,34 @@ const Calendar = () => {
 			data = [];// Removing the previous cells after adding them to the table body
 		}
 		return React.createElement('tbody', {}, tbody)
-	}
-	let monthName = monthNames[currentMonth];
-
-	return(
-		<div>
-		<h1>{ monthName}</h1>
-			<Table >
-				<thead>
-					<tr>
-						<th>Sun</th>
-						<th>Mon</th>
-						<th>Tue</th>
-						<th>Wed</th>
-						<th>Thu</th>
-						<th>Fri</th>
-						<th>Sat</th>
-					</tr>
-				</thead>
-				{generateRows(currentMonth,currentYear)}
-			</Table>
-			<div className="btns"> 
-				<button onClick={previous}>Previous</button>
-				<button onClick={next}>Next</button>
+	};
+	
+	render(){
+		return(
+			<div>
+			<h1>{this.monthName(this.state.currentMonth)}</h1>
+				<Table >
+					<thead>
+						<tr>
+							<th>Sun</th>
+							<th>Mon</th>
+							<th>Tue</th>
+							<th>Wed</th>
+							<th>Thu</th>
+							<th>Fri</th>
+							<th>Sat</th>
+						</tr>
+					</thead>
+					{this.generateRows(this.state.currentMonth,this.state.currentYear)}
+				</Table>
+				<div className="btns"> 
+					<button onClick={this.previous}>Previous</button>
+					<button onClick={this.next}>Next</button>
+				</div>
 			</div>
-		</div>
-	);
-};
+		);
+	};
+}
+	
 
 export default Calendar;
