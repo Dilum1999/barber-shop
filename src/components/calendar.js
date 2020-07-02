@@ -15,46 +15,46 @@ const Calendar = () => {
 	
 
 	const generateRows = (month, year) => {
-		let firstDay = new Date(year, month, 1);
-		let endDay = new Date(year,month + 1, 0);
+		let firstDay = new Date(year, month, 1).getDay();
 		let numberOfDays = new Date(year, month + 1, 0).getDate();
-		let tbl = document.getElementById('calendar-body');
+
 
 		//Clearing the tabel
-		tbl.innerHTML = "";
+		let tbody = [];
+		let date = 1;
 		
+		// Outer for loop is for creating colums
 		for(let i = 0; i < 6; i++){
-			//create a tabel row
-			let row = document.createElement('tr');
+			
+			let data = []; //This is to store cells temporarly
 
-			let date = 1;
 			//creating induvidual cells and filling them with values
 			for(let j = 0; j < 7; j++){
 				// The first column of calendar
 				if(i === 0 && j < firstDay) {
-					let cell = document.createElement('td');
-					let cellText = document.createTextNode("");
-					cell.appendChild(cellText)
-					row.appendChild(cell);
+					let cell = React.createElement('td', {}, "")
+					data.push(cell)
 				}else if(date > numberOfDays){
 						break;
 				}
 				else {
-					let cell = document.createElement('td');
-					let cellText = document.createTextNode(date);
-					cell.appendChild(cellText);
-					row.appendChild(cell);
+					let cell = React.createElement('td', {}, date)
+					data.push(cell)
 					date++;
 				}
 			}
-			tbl.appendChild(row) //appending all the rows innto the calendar
+			//create a tabel row
+			let row = React.createElement('tr', {}, data)
+			tbody.push(row) //appending all the rows innto the calendar body
+			data = [];// Removing the previous cells after adding them to the table body
 		}
+		return React.createElement('tbody', {}, tbody)
 	}
-	generateRows(currentMonth,currentYear)
+	
 
 	return(
 		<div>
-		<h1>{currentYear}</h1>
+		<h1>{currentYear, monthName}</h1>
 			<Table >
 				<thead>
 					<tr>
@@ -67,9 +67,7 @@ const Calendar = () => {
 						<th>Sat</th>
 					</tr>
 				</thead>
-				<tbody id="calendar-body">
-					
-				</tbody>
+				{generateRows(currentMonth,currentYear)}
 			</Table>
 		</div>
 	);
