@@ -3,26 +3,58 @@ import Table from 'react-bootstrap/Table';
 
 const Calendar = () => {
 	let today = new Date();
-	let year = today.getFullYear();
-	let month = today.getMonth();
+	let currentYear = today.getFullYear();
+	let currentMonth = today.getMonth();
 	let day = today.getDay();
 
 	const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 	];
 
-	let monthName = monthNames[month];
+	let monthName = monthNames[currentMonth];
+	
 
-	const generateRows = () => {
-		const firstDay = new Date(year, month, 1)
-		const endDay = new Date(year,month + 1, 0)
-		return endDay.getDay() 
+	const generateRows = (month, year) => {
+		let firstDay = new Date(year, month, 1);
+		let endDay = new Date(year,month + 1, 0);
+		let numberOfDays = new Date(year, month + 1, 0).getDate();
+		let tbl = document.getElementById('calendar-body');
+
+		//Clearing the tabel
+		tbl.innerHTML = "";
+		
+		for(let i = 0; i < 6; i++){
+			//create a tabel row
+			let row = document.createElement('tr');
+
+			let date = 1;
+			//creating induvidual cells and filling them with values
+			for(let j = 0; j < 7; j++){
+				// The first column of calendar
+				if(i === 0 && j < firstDay) {
+					let cell = document.createElement('td');
+					let cellText = document.createTextNode("");
+					cell.appendChild(cellText)
+					row.appendChild(cell);
+				}else if(date > numberOfDays){
+						break;
+				}
+				else {
+					let cell = document.createElement('td');
+					let cellText = document.createTextNode(date);
+					cell.appendChild(cellText);
+					row.appendChild(cell);
+					date++;
+				}
+			}
+			tbl.appendChild(row) //appending all the rows innto the calendar
+		}
 	}
+	generateRows(currentMonth,currentYear)
 
 	return(
 		<div>
-		<h1>{year}</h1>
-		<h1>{generateRows()}</h1>
+		<h1>{currentYear}</h1>
 			<Table >
 				<thead>
 					<tr>
@@ -35,25 +67,8 @@ const Calendar = () => {
 						<th>Sat</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>4</td>
-						<td>5</td>
-						<td>6</td>
-						<td>7</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>4</td>
-						<td>5</td>
-						<td>6</td>
-						<td>7</td>
-					</tr>
+				<tbody id="calendar-body">
+					
 				</tbody>
 			</Table>
 		</div>
