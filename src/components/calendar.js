@@ -2,6 +2,9 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import './calendar.css';
 
+import Right from '../images/right-arrow.png';
+import Left from '../images/left-arrow.png';
+
 class Calendar extends React.Component {
 	constructor(props){
 		super(props)
@@ -32,7 +35,6 @@ class Calendar extends React.Component {
 		this.setState({
 			currentMonth:(this.state.currentMonth + 1) % 12
 		});
-		//generateRows(currentMonth,currentYear)
 	};
 
 	previous(){
@@ -83,7 +85,6 @@ class Calendar extends React.Component {
 					data.push(cell)
 					date++;
 				}
-				keyVal ++;
 			}
 			//create a tabel row
 			let row = React.createElement('tr', {key:i}, data)
@@ -112,8 +113,8 @@ class Calendar extends React.Component {
 					{this.generateRows(this.state.currentMonth,this.state.currentYear)}
 				</Table>
 				<div className="btns"> 
-					<button onClick={this.previous}>Previous</button>
-					<button onClick={this.next}>Next</button>
+					<img src={Left} className="arrow" onClick={this.previous} alt="Previous month"/>
+					<img src={Right} className="arrow" onClick={this.next} alt="next month"/>
 				</div>
 			</div>
 		);
