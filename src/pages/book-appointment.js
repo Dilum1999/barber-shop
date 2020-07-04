@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import './booking-appointment.css';
 import Calendar from '../components/calendar';
-import Form from '../components/form';
 import PopUp from '../components/popup';
 
 class BookAppointment extends React.Component{
@@ -13,20 +12,25 @@ class BookAppointment extends React.Component{
 		this.state = {
 			currentYear: today.getFullYear(),
 			currentMonth: today.getMonth(),
-			display:"none",		
+			display:"none",
+			selectedDate:''		
 		};
 		this.previous = this.previous.bind(this);
 		this.next = this.next.bind(this);
 		this.displayPopUp = this.displayPopUp.bind(this);
+		this.onNameChange = this.onNameChange.bind(this);
 	}
-	// let day = today.getDay();
 	
+
+	//Getting the month name 
 	monthName(month) {
 		const monthNames = ["January", "February", "March", "April", "May", "June",
 		"July", "August", "September", "October", "November", "December"];
 		return monthNames[month]
 	};
 
+
+	//When clicked the popup opens
 	displayPopUp() {
 		if(this.state.display === "none"){
 			this.setState({
@@ -39,6 +43,8 @@ class BookAppointment extends React.Component{
 		}
 	};
 	
+
+	//Navigating to the next month
 	next() {
 		if(this.state.currentYear === 11){
 			this.setState({
@@ -50,6 +56,8 @@ class BookAppointment extends React.Component{
 		});
 	};
 
+
+	//Navigating to the previous month
 	previous(){
 		if(this.state.currentYear === 0){
 			this.setState({
@@ -67,6 +75,11 @@ class BookAppointment extends React.Component{
 		}
 	};
 
+	onNameChange(newName){
+		this.setState({
+			selectedDate:newName
+		})
+	}
 	
 
 	render(){
@@ -77,7 +90,6 @@ class BookAppointment extends React.Component{
 			<Row>
 			<Col className="booking" lg={6} md={10}>
 			<h5>Book An Appointment</h5>
-			<Form/>
 			</Col>
 			<Col lg={6} md={10}>
 				<Calendar 
@@ -87,6 +99,7 @@ class BookAppointment extends React.Component{
 					previous = {this.previous}
 					next = {this.next}
 					displayPopUp={this.displayPopUp}
+					onNameChange = {this.onNameChange}
 				/>
 			</Col>
 			</Row>
@@ -94,6 +107,8 @@ class BookAppointment extends React.Component{
 			<PopUp
 				display = {this.state.display}
 				displayPopUp={this.displayPopUp}
+				date = {this.state.selectedDate}
+				month = {this.monthName(this.state.currentMonth)}
 			/>
 			</div>
 		);
