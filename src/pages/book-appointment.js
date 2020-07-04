@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import './booking-appointment.css';
 import Calendar from '../components/calendar';
 import PopUp from '../components/popup';
+import BookingSteps from '../components/booking-steps';
 
 class BookAppointment extends React.Component{
 	constructor(props){
@@ -43,12 +44,17 @@ class BookAppointment extends React.Component{
 				display:"none"
 			})
 		}
+		if(this.state.popUpForm){
+			this.setState({
+				popUpForm:false
+			})
+		}
 	};
 	
 
 	//Navigating to the next month
 	next() {
-		if(this.state.currentYear === 11){
+		if(this.state.currentMonth === 11){
 			this.setState({
 				currentYear: this.state.currentYear + 1
 			})
@@ -61,7 +67,7 @@ class BookAppointment extends React.Component{
 
 	//Navigating to the previous month
 	previous(){
-		if(this.state.currentYear === 0){
+		if(this.state.currentMonth === 0){
 			this.setState({
 				currentYear: this.state.currentYear - 1
 			})
@@ -96,9 +102,6 @@ class BookAppointment extends React.Component{
 			<div>
 			<Container>
 			<Row>
-			<Col className="booking" lg={6} md={10}>
-			<h5>Book An Appointment</h5>
-			</Col>
 			<Col lg={6} md={10}>
 				<Calendar 
 					monthName = {this.monthName}
@@ -109,6 +112,9 @@ class BookAppointment extends React.Component{
 					displayPopUp={this.displayPopUp}
 					onNameChange = {this.onNameChange}
 				/>
+			</Col>
+			<Col className="booking" lg={6} md={10}>
+				<BookingSteps />
 			</Col>
 			</Row>
 			</Container>

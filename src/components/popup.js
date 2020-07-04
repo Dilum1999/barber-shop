@@ -25,21 +25,29 @@ class PopUp extends React.Component{
 	return React.createElement('tbody',{},rows);
 	}
 
+	
+
 
 	render() {
 		return(
 			<div className="popup" style={{display:this.props.display}}>
 				<div className="popup-inner">
-				<button onClick={this.props.displayPopUp}>Close</button>
 					{!this.props.popUpForm
 					? <div>
+							<button onClick={this.props.displayPopUp}>Close</button>
 							<h4>{this.props.month} {this.props.date}</h4>
 							<h4>Availability</h4>
 							<Table>
 								{this.generateCells()}
 							</Table>
 						</div>
-					: <Form />
+					: <div>
+							<div className="navigate">
+								<button onClick={this.props.onPopUpChange}>Back</button>
+								<button onClick={this.props.displayPopUp}>Close</button>
+							</div>
+							<Form />
+						</div>
 					}
 				</div>
 			</div>

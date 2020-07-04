@@ -62,7 +62,7 @@ class Calendar extends React.Component {
 	render(){
 		return(
 			<div className="calendar">
-			<h1>{this.props.monthName(this.props.currentMonth)}</h1>
+			<h3>{this.props.monthName(this.props.currentMonth)} {this.props.currentYear}</h3>
 				<Table >
 					<thead>
 						<tr>

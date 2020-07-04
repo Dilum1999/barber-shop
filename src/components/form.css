@@ -1,17 +1,32 @@
-#booking-form {
-	border-style: outset;
-	padding: 30px 10px;
-	margin: 20px;
-}
-label {
-	padding: 5px 5px;
+
+li {
+	list-style-type: none;
 }
 
-input, select {
-	display: flex;
-	margin:0px 5px;
-	padding: 0px 10px;
-	border-radius: 1rem;
-	border-width: 2px;
-	border-color: whitesmoke;
+select, input {
+ width:100%;
+ margin: 10px;
+ border:1px;
+ background-color: rgb(224, 224, 224);
+ border-radius: 2rem;
+}
+
+input[type="text"]{
+	padding-left: 15px;
+}
+
+input, select :focus{
+	outline: none;
+}
+
+input[type="submit"]{
+	width: auto;
+	background-color:rgb(224, 224, 224) ;
+	color: black;
+	margin-top: 10px;
+	}
+
+input[type="submit"]:hover{
+	background-color: black;
+	color: rgb(224, 224, 224);
 }

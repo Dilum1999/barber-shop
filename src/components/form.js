@@ -1,5 +1,6 @@
 import React from 'react';
 import './form.css';
+import { Col, Row, Table } from 'react-bootstrap';
 
 class Form extends React.Component {
 	constructor(props){
@@ -9,8 +10,6 @@ class Form extends React.Component {
 			email: '',
 			haircut: "none",
 			shave: "none",
-			date: '',
-			time: ''
 		}
 	};
 
@@ -38,42 +37,41 @@ class Form extends React.Component {
 		})
 	};
 
-	handleDateChange = event => {
-		this.setState({
-			date: event.target.value
-		})
-	};
-
-	handleTimeChange = event => {
-		this.setState({
-			time: event.target.value
-		})
-	};
 
 	submit = () => {
 		alert(this.state.name)
 	};
 
 	render(){
-		const { name, email, haircut, shave, date, time} = this.state
+		const { name, email, haircut, shave} = this.state
 		return(
+			<Row>
+			<Col lg={6} md={12} sm={12}>
 			<form id="booking-form" onSubmit={this.submit} >
+				<ul>
+				<li>
 				<label>
-					Name: 
+					Name
 						<input type="text" name="name" value={name} onChange={this.handleNameChange}/>
 				</label>
+				</li>
+				<li>
 				<label>
-					Email: 
+				Email		
 						<input type="text" name="email" value={email} onChange={this.handleEmailChange}/>
 				</label>
+				</li>
+				<li>
 				<label>
-					Hair Cut: 
+					Hair Cut
 						<select value={haircut} onChange={this.handleHairCutChange} >
 							<option value="none">None</option>
 							<option value="regular">Regular</option>
 							<option value="specific">Specific</option>
 						</select>
 				</label>
+				</li>
+				<li>
 				<label>
 					Shave: 
 						<select value={shave} onChange={this.handleShaveChange} >
@@ -82,16 +80,49 @@ class Form extends React.Component {
 							<option value="specific">Specific</option>
 						</select>
 				</label>
-				<label>
-					Date: 
-						<input type="date" name="date" value={date} onChange={this.handleDateChange} />
-				</label>
-				<label>
-					Time: 
-				 			<input type="time" name="time" value={time} onChange={this.handleTimeChange} />
-				</label>
+				</li>
+				<li>
 				<input type="submit" value="submit"/>
+				</li>
+				</ul>
 			</form>
+			</Col>
+			<Col lg={6} md={12} sm={12}>
+			<h5>Prices</h5>
+				<Table>
+				<thead>
+					<tr>
+						<td>Service</td>
+						<td>Price</td>
+					</tr>
+				</thead>
+					<tbody>
+						<tr>
+							<td>Hair Cut</td>
+						</tr>
+						<tr>
+							<td>Regular</td>
+							<td>$20.00</td>
+						</tr>
+						<tr>
+							<td>Regular</td>
+							<td>$20.00</td>
+						</tr>
+						<tr>
+							<td>Shave</td>
+						</tr>
+						<tr>
+							<td>Regular</td>
+							<td>$20.00</td>
+						</tr>
+						<tr>
+							<td>Regular</td>
+							<td>$20.00</td>
+						</tr>
+					</tbody>
+				</Table>
+			</Col>
+			</Row>
 		);
 	}
 };
