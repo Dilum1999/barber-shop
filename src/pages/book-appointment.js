@@ -13,12 +13,14 @@ class BookAppointment extends React.Component{
 			currentYear: today.getFullYear(),
 			currentMonth: today.getMonth(),
 			display:"none",
-			selectedDate:''		
+			selectedDate:'',
+			popUpForm: false,		
 		};
 		this.previous = this.previous.bind(this);
 		this.next = this.next.bind(this);
 		this.displayPopUp = this.displayPopUp.bind(this);
 		this.onNameChange = this.onNameChange.bind(this);
+		this.onPopUpChange = this.onPopUpChange.bind(this);
 	}
 	
 
@@ -79,6 +81,12 @@ class BookAppointment extends React.Component{
 		this.setState({
 			selectedDate:newName
 		})
+	};
+
+	onPopUpChange(){
+		this.setState({
+			popUpForm: !this.state.popUpForm
+		})
 	}
 	
 
@@ -109,6 +117,8 @@ class BookAppointment extends React.Component{
 				displayPopUp={this.displayPopUp}
 				date = {this.state.selectedDate}
 				month = {this.monthName(this.state.currentMonth)}
+				popUpForm = {this.state.popUpForm}
+				onPopUpChange = {this.onPopUpChange}
 			/>
 			</div>
 		);

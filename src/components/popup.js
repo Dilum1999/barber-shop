@@ -10,7 +10,12 @@ class PopUp extends React.Component{
 		for(let i = 9; i < 18 ;i++ ){
 			let row = [];
 			for(let j = 0; j < 60; j+=15){
-				let cell = (j === 0) ?React.createElement('td',{key:`${i}:${j}0`}, `${i}:${j}0`) :React.createElement('td',{key:`${i}:${j}`}, `${i}:${j}`);
+				let popUpButton = (j === 0)? React.createElement('button',{
+					onClick:this.props.onPopUpChange
+				}, `${i}:${j}0` ): React.createElement('button',{
+					onClick:this.props.onPopUpChange
+				}, `${i}:${j}` )
+				let cell = (j === 0) ?React.createElement('td',{key:`${i}:${j}0`}, popUpButton) :React.createElement('td',{key:`${i}:${j}`}, popUpButton);
 				row.push(cell);
 			}
 			let createRow = React.createElement('tr',{key:keyValForRow}, row)
@@ -25,12 +30,17 @@ class PopUp extends React.Component{
 		return(
 			<div className="popup" style={{display:this.props.display}}>
 				<div className="popup-inner">
-					<h4>{this.props.month} {this.props.date}</h4>
-					<h4>Availability</h4>
-					<Table>
-						{this.generateCells()}
-					</Table>
-					<button onClick={this.props.displayPopUp}>Close</button>
+				<button onClick={this.props.displayPopUp}>Close</button>
+					{!this.props.popUpForm
+					? <div>
+							<h4>{this.props.month} {this.props.date}</h4>
+							<h4>Availability</h4>
+							<Table>
+								{this.generateCells()}
+							</Table>
+						</div>
+					: <Form />
+					}
 				</div>
 			</div>
 		);
