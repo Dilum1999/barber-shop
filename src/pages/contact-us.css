@@ -1,0 +1,17 @@
+h1, h3, h6 {
+	text-align: center;
+}
+hr {
+	border-color: black;
+}
+
+.google-map {
+	padding: 25px 5px;
+	border: 0px;
+}
+
+.info {
+	padding: 20px, 10px;
+	margin-top: 75px;
+}
+

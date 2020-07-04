@@ -1,0 +1,59 @@
+.btns {
+	display: flex;
+	justify-content: flex-end;
+}
+
+button{
+	background-color: white;
+	border: 0ch;
+	border-radius: 2rem;
+}
+button:hover{
+	background-color: rgb(189, 187, 187);
+}
+
+@keyframes anim {
+	0% {width: 45px; padding-bottom: 40px;}
+	25% {width:42.5px; padding-bottom: 42.5px;}
+	50% {width:40px; padding-bottom: 45px;}
+	75% {width: 37.5px; padding-bottom:47.5px ;}
+	100% {width: 35px; }
+}
+.arrow {
+	width: 35px;
+	padding-bottom: 50px;
+}
+.arrow:hover{
+	cursor: pointer;
+	animation-name: anim;
+	animation-duration: 2s;
+}
+
+
+@media only screen and (max-width:720px){
+	.arrow {
+		width: 50px;
+		height:100px;
+	}
+	.arrow:hover{
+		animation-name: none;
+	}
+	button {
+		padding: 0px;
+		margin:0px;
+	}
+	.calendar {
+		box-sizing: border-box;
+	}
+	td {
+		box-sizing: unset !important;
+		margin: 0px;
+		padding: 0px;
+		width:100%;
+		border: 0px;
+	}
+	table {
+		overflow-x: auto;
+		display: block;
+	}
+}

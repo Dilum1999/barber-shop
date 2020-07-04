@@ -3,7 +3,6 @@ import './popup.css';
 import { Table } from 'react-bootstrap';
 
 class PopUp extends React.Component{
-
 	generateCells() {
 		let keyValForRow = 1;
 		let rows = [];
@@ -20,18 +19,16 @@ class PopUp extends React.Component{
 	return React.createElement('tbody',{},rows);
 	}
 
+
 	render() {
 		return(
-			<div className="popup">
+			<div className="popup" style={{display:this.props.display}}>
 				<div className="popup-inner">
-					<h1>Hello World!</h1>
+					<h4>Availability</h4>
 					<Table>
-						<thead>
-							<th>Available</th>
-						</thead>
 						{this.generateCells()}
 					</Table>
-					<button onClick={this.props.closePopup}>Close</button>
+					<button onClick={this.props.displayPopUp}>Close</button>
 				</div>
 			</div>
 		);
