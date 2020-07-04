@@ -6,57 +6,8 @@ import Right from '../images/right-arrow.png';
 import Left from '../images/left-arrow.png';
 
 class Calendar extends React.Component {
-	constructor(props){
-		super(props)
-		let today = new Date()
-		
-		this.state = {
-			currentYear: today.getFullYear(),
-			currentMonth: today.getMonth()		
-		};
-		this.previous = this.previous.bind(this);
-		this.next = this.next.bind(this);
-		this.generateRows = this.generateRows.bind(this);
-	}
-	// let day = today.getDay();
 	
-	monthName(month) {
-		const monthNames = ["January", "February", "March", "April", "May", "June",
-		"July", "August", "September", "October", "November", "December"];
-		return monthNames[month]
-	}
-	
-	next() {
-		if(this.state.currentYear === 11){
-			this.setState({
-				currentYear: this.state.currentYear + 1
-			})
-		}
-		this.setState({
-			currentMonth:(this.state.currentMonth + 1) % 12
-		});
-	};
-
-	previous(){
-		if(this.state.currentYear === 0){
-			this.setState({
-				currentYear: this.state.currentYear - 1
-			})
-		}
-		if(this.state.currentMonth === 0){
-			this.setState({
-				currentMonth: 11
-			})
-		}else{
-			this.setState({
-				currentMonth: this.state.currentMonth - 1
-			})
-		}
-		//generateRows(currentMonth,currentYear)
-	};
-
-
-	 generateRows(month, year){
+	generateRows(month, year){
 		let firstDay = new Date(year, month, 1).getDay();
 		let numberOfDays = new Date(year, month + 1, 0).getDate();
 
@@ -81,10 +32,12 @@ class Calendar extends React.Component {
 						break;
 				}
 				else {
-					let cell = React.createElement('td', {key : keyVal}, date)
+					let popupButton = React.createElement('button', {onClick:this.props.displayPopUp}, date)
+					let cell = React.createElement('td', {key : keyVal}, popupButton)
 					data.push(cell)
 					date++;
 				}
+				keyVal++;
 			}
 			//create a tabel row
 			let row = React.createElement('tr', {key:i}, data)
@@ -96,8 +49,8 @@ class Calendar extends React.Component {
 	
 	render(){
 		return(
-			<div>
-			<h1>{this.monthName(this.state.currentMonth)}</h1>
+			<div className="calendar">
+			<h1>{this.props.monthName(this.props.currentMonth)}</h1>
 				<Table >
 					<thead>
 						<tr>
@@ -110,11 +63,11 @@ class Calendar extends React.Component {
 							<th>Sat</th>
 						</tr>
 					</thead>
-					{this.generateRows(this.state.currentMonth,this.state.currentYear)}
+					{this.generateRows(this.props.currentMonth,this.props.currentYear)}
 				</Table>
 				<div className="btns"> 
-					<img src={Left} className="arrow" onClick={this.previous} alt="Previous month"/>
-					<img src={Right} className="arrow" onClick={this.next} alt="next month"/>
+					<img src={Left} className="arrow" onClick={this.props.previous} alt="Previous month"/>
+					<img src={Right} className="arrow" onClick={this.props.next} alt="next month"/>
 				</div>
 			</div>
 		);
