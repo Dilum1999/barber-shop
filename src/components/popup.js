@@ -1,6 +1,7 @@
 import React from 'react';
 import './popup.css';
 import { Table } from 'react-bootstrap';
+import Form from '../components/form';
 
 class PopUp extends React.Component{
 	generateCells() {
@@ -24,6 +25,7 @@ class PopUp extends React.Component{
 		return(
 			<div className="popup" style={{display:this.props.display}}>
 				<div className="popup-inner">
+					<h4>{this.props.month} {this.props.date}</h4>
 					<h4>Availability</h4>
 					<Table>
 						{this.generateCells()}
