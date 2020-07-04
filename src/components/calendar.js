@@ -6,7 +6,17 @@ import Right from '../images/right-arrow.png';
 import Left from '../images/left-arrow.png';
 
 class Calendar extends React.Component {
+	constructor(props){
+		super(props)
+		this.handleDateUpdate = this.handleDateUpdate.bind(this);
+		this.generateRows = this.generateRows.bind(this);
+	}
 	
+	handleDateUpdate(e) {
+		this.props.displayPopUp()
+		this.props.onNameChange(e.target.innerText)
+	}
+
 	generateRows(month, year){
 		let firstDay = new Date(year, month, 1).getDay();
 		let numberOfDays = new Date(year, month + 1, 0).getDate();
@@ -32,7 +42,9 @@ class Calendar extends React.Component {
 						break;
 				}
 				else {
-					let popupButton = React.createElement('button', {onClick:this.props.displayPopUp}, date)
+					let popupButton = React.createElement('button', {
+						onClick:this.handleDateUpdate,
+					}, date)
 					let cell = React.createElement('td', {key : keyVal}, popupButton)
 					data.push(cell)
 					date++;
