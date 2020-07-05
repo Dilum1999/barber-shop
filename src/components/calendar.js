@@ -78,7 +78,7 @@ class Calendar extends React.Component {
 					{this.generateRows(this.props.currentMonth,this.props.currentYear)}
 				</Table>
 				<div className="btns"> 
-					<img src={Left} className="arrow" onClick={this.props.previous} alt="Previous month"/>
+					<img src={Left} className={this.props.classNameOfArrow} onClick={this.props.previous} alt="Previous month"/>
 					<img src={Right} className="arrow" onClick={this.props.next} alt="next month"/>
 				</div>
 			</div>

@@ -15,7 +15,8 @@ class BookAppointment extends React.Component{
 			currentMonth: today.getMonth(),
 			display:"none",
 			selectedDate:'',
-			popUpForm: false,		
+			popUpForm: false,	
+			classNameArrow: "disableanim"	
 		};
 		this.previous = this.previous.bind(this);
 		this.next = this.next.bind(this);
@@ -54,6 +55,9 @@ class BookAppointment extends React.Component{
 
 	//Navigating to the next month
 	next() {
+		this.setState({
+			classNameArrow:"arrow"
+		});
 		if(this.state.currentMonth === 11){
 			this.setState({
 				currentYear: this.state.currentYear + 1
@@ -67,18 +71,28 @@ class BookAppointment extends React.Component{
 
 	//Navigating to the previous month
 	previous(){
-		if(this.state.currentMonth === 0){
+		let { currentMonth, currentYear } = this.state
+		//Disabling the button if the month is already passed in real time
+		if(currentYear === new Date().getFullYear() && currentMonth === new Date().getMonth()){
 			this.setState({
-				currentYear: this.state.currentYear - 1
+				classNameArrow:"disableanim"
+			});
+			return
+		}
+		// Change the year
+		if(currentMonth === 0){
+			this.setState({
+				currentYear: currentYear - 1
 			})
 		}
-		if(this.state.currentMonth === 0){
+		//Change the month
+		if(currentMonth === 0){
 			this.setState({
 				currentMonth: 11
 			})
 		}else{
 			this.setState({
-				currentMonth: this.state.currentMonth - 1
+				currentMonth: currentMonth - 1
 			})
 		}
 	};
@@ -111,6 +125,7 @@ class BookAppointment extends React.Component{
 					next = {this.next}
 					displayPopUp={this.displayPopUp}
 					onNameChange = {this.onNameChange}
+					classNameOfArrow = {this.state.classNameArrow}
 				/>
 			</Col>
 			<Col className="booking" lg={6} md={10}>
