@@ -4,6 +4,17 @@ import { Table } from 'react-bootstrap';
 import Form from '../components/form';
 
 class PopUp extends React.Component{
+	constructor(props){
+		super(props)
+		this.OntTimeSlotClick = this.OntTimeSlotClick.bind(this);
+		this.generateCells = this.generateCells.bind(this);
+	}
+
+	OntTimeSlotClick(e) {
+		this.props.onPopUpChange()
+		this.props.onTimeSlotClick(e.target.innerText)
+	}
+
 	generateCells() {
 		let keyValForRow = 1;
 		let rows = [];
@@ -11,9 +22,9 @@ class PopUp extends React.Component{
 			let row = [];
 			for(let j = 0; j < 60; j+=15){
 				let popUpButton = (j === 0)? React.createElement('button',{
-					onClick:this.props.onPopUpChange
+					onClick:this.OntTimeSlotClick
 				}, `${i}:${j}0` ): React.createElement('button',{
-					onClick:this.props.onPopUpChange
+					onClick:this.OntTimeSlotClick
 				}, `${i}:${j}` )
 				let cell = (j === 0) ?React.createElement('td',{key:`${i}:${j}0`}, popUpButton) :React.createElement('td',{key:`${i}:${j}`}, popUpButton);
 				row.push(cell);
@@ -24,8 +35,6 @@ class PopUp extends React.Component{
 		}
 	return React.createElement('tbody',{},rows);
 	}
-
-	
 
 
 	render() {

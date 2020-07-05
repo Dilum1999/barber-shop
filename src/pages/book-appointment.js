@@ -15,14 +15,16 @@ class BookAppointment extends React.Component{
 			currentMonth: today.getMonth(),
 			display:"none",
 			selectedDate:'',
+			selectedTime:'',
 			popUpForm: false,	
 			classNameArrow: "disableanim",
 		};
 		this.previous = this.previous.bind(this);
 		this.next = this.next.bind(this);
 		this.displayPopUp = this.displayPopUp.bind(this);
-		this.onNameChange = this.onNameChange.bind(this);
+		this.onDateClick = this.onDateClick.bind(this);
 		this.onPopUpChange = this.onPopUpChange.bind(this);
+		this.onTimeSlotClick = this.onTimeSlotClick.bind(this);
 	}
 	
 
@@ -97,9 +99,9 @@ class BookAppointment extends React.Component{
 		}
 	};
 
-	onNameChange(newName){
+	onDateClick(newDate){
 		this.setState({
-			selectedDate:newName
+			selectedDate:newDate
 		})
 	};
 
@@ -109,6 +111,11 @@ class BookAppointment extends React.Component{
 		})
 	}
 	
+	onTimeSlotClick(newTime){
+		this.setState({
+			selectedTime:newTime
+		})
+	}
 
 	render(){
 		
@@ -124,7 +131,7 @@ class BookAppointment extends React.Component{
 					previous = {this.previous}
 					next = {this.next}
 					displayPopUp={this.displayPopUp}
-					onNameChange = {this.onNameChange}
+					onDateClick = {this.onDateClick}
 					classNameOfArrow = {this.state.classNameArrow}
 				/>
 			</Col>
@@ -140,6 +147,7 @@ class BookAppointment extends React.Component{
 				month = {this.monthName(this.state.currentMonth)}
 				popUpForm = {this.state.popUpForm}
 				onPopUpChange = {this.onPopUpChange}
+				onTimeSlotClick = {this.onTimeSlotClick}
 			/>
 			</div>
 		);

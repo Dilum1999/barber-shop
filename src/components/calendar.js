@@ -8,13 +8,13 @@ import Left from '../images/left-arrow.png';
 class Calendar extends React.Component {
 	constructor(props){
 		super(props)
-		this.handleDateUpdate = this.handleDateUpdate.bind(this);
+		this.onDateClick = this.onDateClick.bind(this);
 		this.generateRows = this.generateRows.bind(this);
 	}
 	
-	handleDateUpdate(e) {
+	onDateClick(e) {
 		this.props.displayPopUp()
-		this.props.onNameChange(e.target.innerText)
+		this.props.onDateClick(e.target.innerText)
 	}
 
 	generateRows(month, year){
@@ -45,11 +45,11 @@ class Calendar extends React.Component {
 					let popupButton;
 					if (today.getDate() > date && month === today.getMonth() && year === today.getFullYear()){
 						popupButton = React.createElement('button', {
-							onClick:this.handleDateUpdate, disabled:true
+							onClick:this.onDateClick, disabled:true
 						}, date)
 					}else{
 						popupButton = React.createElement('button', {
-							onClick:this.handleDateUpdate}, date)
+							onClick:this.onDateClick}, date)
 					}
 					let cell = React.createElement('td', {key : keyVal}, popupButton)
 					data.push(cell)
