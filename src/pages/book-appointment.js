@@ -16,7 +16,7 @@ class BookAppointment extends React.Component{
 			display:"none",
 			selectedDate:'',
 			popUpForm: false,	
-			classNameArrow: "disableanim"	
+			classNameArrow: "disableanim",
 		};
 		this.previous = this.previous.bind(this);
 		this.next = this.next.bind(this);

@@ -20,7 +20,7 @@ class Calendar extends React.Component {
 	generateRows(month, year){
 		let firstDay = new Date(year, month, 1).getDay();
 		let numberOfDays = new Date(year, month + 1, 0).getDate();
-
+		let today = new Date()
 
 		//Clearing the tabel
 		let tbody = [];
@@ -42,14 +42,20 @@ class Calendar extends React.Component {
 						break;
 				}
 				else {
-					let popupButton = React.createElement('button', {
-						onClick:this.handleDateUpdate,
-					}, date)
+					let popupButton;
+					if (today.getDate() > date && month === today.getMonth() && year === today.getFullYear()){
+						popupButton = React.createElement('button', {
+							onClick:this.handleDateUpdate, disabled:true
+						}, date)
+					}else{
+						popupButton = React.createElement('button', {
+							onClick:this.handleDateUpdate}, date)
+					}
 					let cell = React.createElement('td', {key : keyVal}, popupButton)
 					data.push(cell)
 					date++;
 				}
-				keyVal++;
+				keyVal ++;
 			}
 			//create a tabel row
 			let row = React.createElement('tr', {key:i}, data)
