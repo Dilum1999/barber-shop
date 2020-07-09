@@ -144,10 +144,13 @@ class BookAppointment extends React.Component{
 				display = {this.state.display}
 				displayPopUp={this.displayPopUp}
 				date = {this.state.selectedDate}
+				currentMonth = {this.state.currentMonth}
+				currentYear = {this.state.currentYear}
 				month = {this.monthName(this.state.currentMonth)}
 				popUpForm = {this.state.popUpForm}
 				onPopUpChange = {this.onPopUpChange}
 				onTimeSlotClick = {this.onTimeSlotClick}
+				onDateClick = {this.onDateClick}
 			/>
 			</div>
 		);

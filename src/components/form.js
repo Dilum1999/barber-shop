@@ -4,67 +4,92 @@ import { Col, Row, Table } from 'react-bootstrap';
 
 class Form extends React.Component {
 	constructor(props){
-		super(props)
+		super(props);
 		this.state = {
-			name: '',
-			email: '',
-			haircut: "none",
-			shave: "none",
+			bookingInfo: [],
+			displayInfo: false
 		}
+		this.nameEl = React.createRef();
+		this.emailEl = React.createRef();
+		this.haircutEl = React.createRef();
+		this.shaveEl = React.createRef();
 	};
 
-	handleNameChange = event => {
-		this.setState({
-			name: event.target.value
-		})
+	submitHandler = (event) => {
+		event.preventDefault();
+		this.props.removeBackButton();
+		const name = this.nameEl.current.value;
+		const email = this.emailEl.current.value;
+		const haircut = this.haircutEl.current.value;
+		const shave = this.shaveEl.current.value;
+		const date = (parseInt(this.props.selectedDate) < 10) ? `0${this.props.selectedDate}`: this.props.selectedDate ;
+		const time = this.props.selectedTime;
+		const month = (parseInt(this.props.selectedMonth) + 1 < 10)? `0${this.props.selectedMonth+1}`: this.props.selectedMonth + 1 ;
+		const year = this.props.selectedYear;
+		if(name.trim().length === 0 || email.trim().length === 0 || (haircut === "None" && shave === "None")){
+			return;
+		}
+		let requestBody = {
+			query: `
+				mutation {
+					createBooking(bookingInput: {name: "${name}", email: "${email}", haircutType: "${haircut}", shaveType: "${shave}", time:"${time}", date: "${year}-${month}-${date}"}) {
+						name
+						email
+						haircutType
+						shaveType
+						time
+						date
+					}
+				}
+			`
+		};
+
+		fetch('http://localhost:4000/graphql', {
+			method: "POST",
+			body: JSON.stringify(requestBody),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(res => {
+			if(res.status !== 200 && res.status !== 201){
+				throw new Error('Failed!');
+			}
+			return res.json();
+		}).then(resData => {
+			this.setState({bookingInfo: resData.data.createBooking});
+			this.setState({displayInfo: true});
+			this.props.onDateClick(0)
+		}).catch(err => {
+			console.log(err);
+		});
+
 	};
 
-	handleEmailChange = event => {
-		this.setState({
-			email: event.target.value
-		})
-	};
-
-	handleHairCutChange = event => {
-		this.setState({
-			haircut: event.target.value
-		})
-	};
-
-	handleShaveChange = event => {
-		this.setState({
-			shave: event.target.value
-		})
-	};
-
-
-	submit = () => {
-		alert(this.state.name)
-	};
 
 	render(){
-		const { name, email, haircut, shave} = this.state
 		return(
+			<div>
+			{!this.state.displayInfo ?
 			<Row>
 			<Col lg={6} md={12} sm={12}>
-			<form id="booking-form" onSubmit={this.submit} >
+			<form id="booking-form" onSubmit={this.submitHandler} >
 				<ul>
 				<li>
 				<label>
 					Name
-						<input type="text" name="name" value={name} onChange={this.handleNameChange}/>
+						<input type="text" name="name" ref={this.nameEl}/>
 				</label>
 				</li>
 				<li>
 				<label>
 				Email		
-						<input type="text" name="email" value={email} onChange={this.handleEmailChange}/>
+						<input type="email" name="email" ref={this.emailEl}/>
 				</label>
 				</li>
 				<li>
 				<label>
 					Hair Cut
-						<select value={haircut} onChange={this.handleHairCutChange} >
+						<select ref={this.haircutEl} >
 							<option value="none">None</option>
 							<option value="regular">Regular</option>
 							<option value="specific">Specific</option>
@@ -74,7 +99,7 @@ class Form extends React.Component {
 				<li>
 				<label>
 					Shave: 
-						<select value={shave} onChange={this.handleShaveChange} >
+						<select ref={this.shaveEl} >
 							<option value="none">None</option>
 							<option value="regular">Regular</option>
 							<option value="specific">Specific</option>
@@ -123,6 +148,19 @@ class Form extends React.Component {
 				</Table>
 			</Col>
 			</Row>
+			: 
+			<div className='booking-info'>
+				<ul>
+					<li>Name: {this.state.bookingInfo.name}</li>
+					<li>Email: {this.state.bookingInfo.email}</li>
+					<li>Selected Haircut: {this.state.bookingInfo.haircutType}</li>
+					<li>Selected Shave: {this.state.bookingInfo.shaveType}</li>
+					<li>Time: {this.state.bookingInfo.time}</li>
+					<li>Date: {this.state.bookingInfo.date}</li>
+				</ul>
+			</div>
+		}
+		</div>
 		);
 	}
 };

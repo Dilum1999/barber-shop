@@ -30,3 +30,9 @@ input[type="submit"]:hover{
 	background-color: black;
 	color: rgb(224, 224, 224);
 }
+
+.booking-info {
+	display: flex;
+	justify-content: center;
+	padding-top: 15px;
+}
