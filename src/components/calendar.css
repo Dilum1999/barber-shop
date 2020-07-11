@@ -42,7 +42,7 @@ button:hover{
 	.arrow:hover{
 		animation-name: none;
 	}
-	button {
+	.calendar	button {
 		padding: 0px;
 		margin:0px;
 	}

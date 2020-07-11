@@ -1,0 +1,22 @@
+.login-form {
+	display: flex;
+	justify-content: center;
+	padding: 125px 0px;
+}
+
+.delete-b button {
+	background-color: red;
+	color: blanchedalmond;
+}
+.delete-b button:hover{
+	background-color: blanchedalmond;
+	color: black;
+}
+
+.booked-info{
+	padding-left: 20px;
+	padding-top: 30px;
+}
+
+
+
