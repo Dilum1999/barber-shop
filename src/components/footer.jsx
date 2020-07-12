@@ -2,9 +2,9 @@ import React from 'react';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './footer.css';
+import Iframe from 'react-iframe';
 
 //Images
-import location from '../images/location.PNG';
 import phone from '../images/phone.ico';
 
 const Footer = () => {
@@ -42,7 +42,9 @@ const Footer = () => {
 					<Col md={3} sm={6} className='d-none d-lg-block'>
 						<h5>Location</h5>
 						<hr/>
-						<Image src={location} style={{width:'200px', height: 'auto'}}/>
+						<Iframe url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2607.5181723946525!2d-122.83605118443236!3d49.19072897932143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5485d77929e479af%3A0xa540976e5c5658ff!2sJag%20(ov)%20hair!5e0!3m2!1sen!2sca!4v1593485310260!5m2!1sen!2sca"
+									width="100%"  ariaHidden="false" height='auto'
+								 />
 					</Col>
 				</Row>
 				<hr className='my-hr-line'/>
