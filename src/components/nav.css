@@ -10,7 +10,7 @@
 	border: 1px ridge white;
 }
 .btn:hover {
-	color:rgb(3, 3, 3) !important;
+	color:gray !important;
 	background-color:white;
 }
 
