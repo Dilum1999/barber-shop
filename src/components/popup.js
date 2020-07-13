@@ -16,12 +16,12 @@ class PopUp extends React.Component{
 	}
 
 	removeBackButton = () => {
-		this.setState({hide: !this.state.hide})
+		this.setState({hide: true})
 	}
 
 	OntTimeSlotClick(e) {
 		this.props.onPopUpChange()
-		this.setState({selectedTime:e.target.innerText})
+		this.setState({selectedTime:e.target.innerText, hide:false})
 	}
 
 	getBookedTimeslots = () => {
