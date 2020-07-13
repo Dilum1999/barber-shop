@@ -1,16 +1,25 @@
 import React from 'react';
 import './admin.css';
 import { Table } from 'react-bootstrap';
+import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
 
 class Admin extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
 			isLogin: false,
-			bookingDetails: []
+			bookingDetails: [],
+			cookieKey: 'loginCookie',
+			cookieValue: 'cookievalueforacessingbooking',
+			cookieStartDate: '',
 		}
 		this.usernameEl = React.createRef();
 		this.passwordEl = React.createRef();
+	}
+
+
+	setCookie = () => {
+		bake_cookie(this.state.cookieKey, this.state.cookieValue)
 	}
 
 	submitHandler = event => {
@@ -47,7 +56,7 @@ class Admin extends React.Component{
 			return res.json();
 		})
 		.then(resData => {
-			console.log(resData);
+			this.setCookie()
 			this.getData()
 		})
 		.catch(err => {
@@ -144,9 +153,18 @@ class Admin extends React.Component{
 		return React.createElement('tbody', {}, tableRow)
 	}
 
+	logoutsubmitHandler = () => {
+		this.setState({isLogin: false})
+		delete_cookie(this.state.cookieKey)
+	}
+
 	bookedAppointmentTabel = () => {
 		
 		return(
+			<React.Fragment>
+			<div className='logout-btn'>
+			<button onClick={this.logoutsubmitHandler} >Log Out</button>
+			</div>
 			<div className="booked-info">
 				<h3>Booking Details</h3>
 				<Table>
@@ -164,6 +182,7 @@ class Admin extends React.Component{
 						{this.generatingData()}
 				</Table>
 			</div>
+			</React.Fragment>
 		);
 	}
 
@@ -191,6 +210,16 @@ class Admin extends React.Component{
 				</form>
 			</div>
 		);
+	}
+
+	componentDidMount() {
+		if(read_cookie(this.state.cookieKey) === this.state.cookieValue){
+			this.getData()
+		}
+	}
+
+	componentWillUnmount() {
+		delete_cookie(this.state.cookieKey)
 	}
 
 	render(){

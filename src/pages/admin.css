@@ -18,5 +18,24 @@
 	padding-top: 30px;
 }
 
+.logout-btn {
+	display: flex;
+	justify-content: flex-end;
+	border: 1px unset black;
+	padding: 5px 20px;
+
+}
+.logout-btn button{
+	background-color: black;
+	color: white;
+	border: 1px solid black;
+	padding: 8px 25px;
+	border-radius: 2rem;
+	transition: 0.8s;
+}
+.logout-btn button:hover{
+	background-color: white;
+	color: gray;
+}
 
 
